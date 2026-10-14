@@ -44,6 +44,7 @@ if [[ -n $dry ]]; then
 fi
 
 go run . count --commit --tag --push
-[[ $(cat .version) == "$version" ]] || fail ".version is $(cat .version), binaries were built as $version"
+stamped=$(go run .)
+[[ $stamped == "$version" ]] || fail ".version is $stamped, binaries were built as $version"
 
 gh release create "v$version" dist/* --title "vstamp $version" --generate-notes --latest
